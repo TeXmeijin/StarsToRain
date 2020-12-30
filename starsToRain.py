@@ -5,16 +5,11 @@ import time
 import sys
 from github import Github
 
-#based on GithubAPI v3
-username = raw_input("Github username: ")
-password = getpass.getpass()
-
 #opening the github session
 try:
-    g = Github(username,password)
+    g = Github("your access token")
     user = g.get_user()
-except github.GithubException, exception:
-    print "Oops something went wrong! Probably Bad Credentials. Status: " + str(exception.status)
+except (exception):
     sys.exit()
 
 #timestamp
@@ -37,7 +32,7 @@ f.write("<DT><H3 FOLDED>Github Stars</H3>")
 f.write("<DL><p>")
 
 for repo in user.get_starred():
-    print "Exporting " + repo.name
+    print("Exporting " + repo.name)
     link = "<DT><A HREF=\"" + repo.html_url + "\">" + repo.name + "</A>"
     f.write(link)
 
@@ -45,4 +40,4 @@ f.write("</DL><p>")
 f.write("</HTML>")
 
 f.close()
-print "Export Completed!"
+print("Export Completed!")
